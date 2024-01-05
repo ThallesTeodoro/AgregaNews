@@ -1,0 +1,40 @@
+version: '3.4'
+
+services:
+  agreganews.collectnews.api:
+    image: ${DOCKER_REGISTRY-}agreganewscollectnewsapi
+    build:
+      context: .
+      dockerfile: source/AgregaNews.CollectNews.Api/Dockerfile
+    ports:
+      - "8080:5000"
+      - "8081:5001"
+
+  agreganews.collectnews.database:
+    image: mongo
+    container_name: AgregaNews.CollectNews.Database
+    hostname: collectnewsdb
+    ports:
+      - "27017:27017"
+    volumes:
+      - collectnews_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dbusername
+      MONGO_INITDB_ROOT_PASSWORD: secret
+
+  agreganews.rabbitmq:
+    image: rabbitmq:3.11.7-management
+    container_name: AgregaNews.Queue
+    hostname: agreganews-queue
+    volumes:
+      - ./.containers/queue/data/:/var/lib/rabbitmq
+      - ./.containers/queue/log/:/var/log/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: mq_user
+      RABBITMQ_DEFAULT_PASS: secret
+    ports:
+        - 25672:25672
+        - 15672:15672
+
+volumes:
+  collectnews_data:

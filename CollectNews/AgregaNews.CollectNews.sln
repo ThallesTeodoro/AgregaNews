@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{FD133A33-9997-4D7B-B048-17AD57C4EDBE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FF01E764-5B3B-4240-B739-B21069E9B3A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgregaNews.CollectNews.Api", "source\AgregaNews.CollectNews.Api\AgregaNews.CollectNews.Api.csproj", "{9570230E-4D5F-4E38-A651-1A4A3AC60E86}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{468FACAA-3AE5-499C-8E01-9CB071C6ED3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgregaNews.CollectNews.Application", "source\AgregaNews.CollectNews.Application\AgregaNews.CollectNews.Application.csproj", "{48D1F879-62C2-455F-BCF4-95B54FA59378}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgregaNews.CollectNews.Infrastructure", "source\AgregaNews.CollectNews.Infrastructure\AgregaNews.CollectNews.Infrastructure.csproj", "{1FCF9125-E431-4129-963C-CFFA2C6ED150}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgregaNews.CollectNews.Domain", "source\AgregaNews.CollectNews.Core\AgregaNews.CollectNews.Domain.csproj", "{C893201F-C5A0-4C4E-AF9C-EC9DD64280B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9570230E-4D5F-4E38-A651-1A4A3AC60E86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9570230E-4D5F-4E38-A651-1A4A3AC60E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9570230E-4D5F-4E38-A651-1A4A3AC60E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9570230E-4D5F-4E38-A651-1A4A3AC60E86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{468FACAA-3AE5-499C-8E01-9CB071C6ED3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{468FACAA-3AE5-499C-8E01-9CB071C6ED3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{468FACAA-3AE5-499C-8E01-9CB071C6ED3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{468FACAA-3AE5-499C-8E01-9CB071C6ED3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48D1F879-62C2-455F-BCF4-95B54FA59378}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48D1F879-62C2-455F-BCF4-95B54FA59378}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48D1F879-62C2-455F-BCF4-95B54FA59378}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48D1F879-62C2-455F-BCF4-95B54FA59378}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FCF9125-E431-4129-963C-CFFA2C6ED150}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FCF9125-E431-4129-963C-CFFA2C6ED150}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FCF9125-E431-4129-963C-CFFA2C6ED150}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FCF9125-E431-4129-963C-CFFA2C6ED150}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C893201F-C5A0-4C4E-AF9C-EC9DD64280B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C893201F-C5A0-4C4E-AF9C-EC9DD64280B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C893201F-C5A0-4C4E-AF9C-EC9DD64280B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C893201F-C5A0-4C4E-AF9C-EC9DD64280B8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9570230E-4D5F-4E38-A651-1A4A3AC60E86} = {FD133A33-9997-4D7B-B048-17AD57C4EDBE}
+		{48D1F879-62C2-455F-BCF4-95B54FA59378} = {FD133A33-9997-4D7B-B048-17AD57C4EDBE}
+		{1FCF9125-E431-4129-963C-CFFA2C6ED150} = {FD133A33-9997-4D7B-B048-17AD57C4EDBE}
+		{C893201F-C5A0-4C4E-AF9C-EC9DD64280B8} = {FD133A33-9997-4D7B-B048-17AD57C4EDBE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1549B295-E1D3-43F1-8D03-FF120365750A}
+	EndGlobalSection
+EndGlobal
