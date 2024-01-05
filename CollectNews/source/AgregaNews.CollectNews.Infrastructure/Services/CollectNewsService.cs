@@ -31,7 +31,7 @@ public class CollectNewsService : ICollectNewsService
         BaseUrl = baseUrl;
     }
 
-    public async Task<NewsDto?> CollectTopHeadlines(string country, string? category, int? pageSize, int? page)
+    public async Task<NewsDto?> CollectTopHeadlinesAsync(string country, string? category, int? pageSize, int? page)
     {
         try
 		{

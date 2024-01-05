@@ -9,14 +9,14 @@ using MediatR;
 
 namespace AgregaNews.CollectNews.Application.Queries.CollectNews.Collect;
 
-public class CollectNewsHandler : IRequestHandler<CollectNewsQuery, List<CollectNewsResponse>>
+public class CollectNewsQueryHandler : IRequestHandler<CollectNewsQuery, List<CollectNewsResponse>>
 {
     private readonly ICollectNewsService _collectNewsService;
     private readonly IMapper _mapper;
     private readonly INewsRepository _newsRepository;
     private readonly IEventBus _eventBus;
 
-    public CollectNewsHandler(
+    public CollectNewsQueryHandler(
         ICollectNewsService collectNewsService,
         IMapper mapper,
         INewsRepository newsRepository,
@@ -30,7 +30,7 @@ public class CollectNewsHandler : IRequestHandler<CollectNewsQuery, List<Collect
 
     public async Task<List<CollectNewsResponse>> Handle(CollectNewsQuery request, CancellationToken cancellationToken)
     {
-        var result = await _collectNewsService.CollectTopHeadlines(request.Country ?? "br", request.Category, request.PageSize, request.Page);
+        var result = await _collectNewsService.CollectTopHeadlinesAsync(request.Country ?? "br", request.Category, request.PageSize, request.Page);
 
         if (result is not null)
         {
