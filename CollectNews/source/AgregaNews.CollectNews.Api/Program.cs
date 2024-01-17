@@ -1,3 +1,4 @@
+using AgregaNews.CollectNews.Api.Middlewares;
 using AgregaNews.CollectNews.Api.Options;
 using AgregaNews.CollectNews.Application;
 using AgregaNews.CollectNews.Infrastructure;
@@ -38,6 +39,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 

@@ -21,7 +21,7 @@ public class CollectNewsModule : CarterModule
             [FromServices] ISender sender,
             HttpContext httpContext) =>
         {
-            var response = new JsonResponse<List<CollectNewsResponse>, object>(StatusCodes.Status200OK, null, null);
+            var response = new JsonResponse<List<CollectNewsResponse>, List<object>>(StatusCodes.Status200OK, null, null);
 
             response.Data = await sender.Send(new CollectNewsQuery(
                 parameters.Category,
@@ -35,6 +35,7 @@ public class CollectNewsModule : CarterModule
             return response.ToString();
         })
         .WithName("CollectNews")
-        .WithOpenApi();
+        .Produces<JsonResponse<List<CollectNewsResponse>, List<object>>>(StatusCodes.Status200OK)
+        .Produces<JsonResponse<List<object>, List<object>>>(StatusCodes.Status500InternalServerError);
     }
 }
