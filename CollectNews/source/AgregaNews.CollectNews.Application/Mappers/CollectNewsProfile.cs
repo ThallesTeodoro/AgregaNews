@@ -1,7 +1,7 @@
 ﻿using AgregaNews.CollectNews.Application.Responses;
-using AgregaNews.CollectNews.Domain.Contracts.QueueEvents;
-using AgregaNews.CollectNews.Domain.DTOs;
-using AgregaNews.CollectNews.Domain.Entities;
+using AgregaNews.Common.Contracts.QueueEvents;
+using AgregaNews.Common.DTOs;
+using AgregaNews.Common.Entities;
 using AutoMapper;
 
 namespace AgregaNews.CollectNews.Application.Mappers;

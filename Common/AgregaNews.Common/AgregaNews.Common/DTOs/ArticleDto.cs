@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace AgregaNews.CollectNews.Domain.DTOs;
+namespace AgregaNews.Common.DTOs;
 
 public record ArticleDto
 {

@@ -1,8 +1,6 @@
-﻿using AgregaNews.CollectNews.Domain.Contracts.Data;
+﻿namespace AgregaNews.Common.Contracts.QueueEvents;
 
-namespace AgregaNews.CollectNews.Domain.Entities;
-
-public class News : IEntity
+public record NewsAnalyzeEvent
 {
     public Guid Id { get; set; }
     public string? Author { get; set; }
@@ -12,5 +10,4 @@ public class News : IEntity
     public string? UrlToImage { get; set; }
     public DateTimeOffset? PublishedAt { get; set; }
     public string? Content { get; set; }
-    public DateTimeOffset CreatedAt { get; set; }
 }

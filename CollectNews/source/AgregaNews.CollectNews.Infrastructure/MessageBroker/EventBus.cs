@@ -1,4 +1,4 @@
-﻿using AgregaNews.CollectNews.Domain.Contracts.EventBus;
+﻿using AgregaNews.Common.Contracts.EventBus;
 using MassTransit;
 
 namespace AgregaNews.CollectNews.Infrastructure.MessageBroker;

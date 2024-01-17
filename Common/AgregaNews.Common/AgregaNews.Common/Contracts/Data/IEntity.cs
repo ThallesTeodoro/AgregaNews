@@ -1,4 +1,4 @@
-﻿namespace AgregaNews.CollectNews.Domain.Contracts.Data;
+﻿namespace AgregaNews.Common.Contracts.Data;
 
 public interface IEntity
 {

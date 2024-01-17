@@ -1,5 +1,5 @@
-﻿using AgregaNews.CollectNews.Domain.Contracts.Data;
-using AgregaNews.CollectNews.Domain.Contracts.Repositories;
+﻿using AgregaNews.Common.Contracts.Data;
+using AgregaNews.Common.Contracts.Repositories;
 using MongoDB.Driver;
 
 namespace AgregaNews.CollectNews.Infrastructure.Data.Repositories;

@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace AgregaNews.CollectNews.Domain.Contracts.EventBus;
+﻿namespace AgregaNews.Common.Contracts.EventBus;
 
 public interface IEventBus
 {

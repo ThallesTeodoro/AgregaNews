@@ -1,6 +1,6 @@
-﻿using AgregaNews.CollectNews.Domain.Contracts.Services;
-using AgregaNews.CollectNews.Domain.DTOs;
-using AgregaNews.CollectNews.Domain.Exceptions.CollectNews;
+﻿using AgregaNews.Common.Contracts.Services;
+using AgregaNews.Common.DTOs;
+using AgregaNews.Common.Exceptions.CollectNews;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Net;

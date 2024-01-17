@@ -1,6 +1,6 @@
-﻿using AgregaNews.CollectNews.Domain.Contracts.EventBus;
-using AgregaNews.CollectNews.Domain.Contracts.Repositories;
-using AgregaNews.CollectNews.Domain.Contracts.Services;
+﻿using AgregaNews.Common.Contracts.EventBus;
+using AgregaNews.Common.Contracts.Repositories;
+using AgregaNews.Common.Contracts.Services;
 using AgregaNews.CollectNews.Infrastructure.Data.Repositories;
 using AgregaNews.CollectNews.Infrastructure.MessageBroker;
 using AgregaNews.CollectNews.Infrastructure.Services;
