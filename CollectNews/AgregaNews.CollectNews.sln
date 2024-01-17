@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgregaNews.CollectNews.Infr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgregaNews.CollectNews.Application.UnitTests", "tests\AgregaNews.CollectNews.Application.UnitTests\AgregaNews.CollectNews.Application.UnitTests.csproj", "{E35C89E8-7810-4A62-BBFA-87608795B6CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgregaNews.CollectNews.Domain", "source\AgregaNews.CollectNews.Domain\AgregaNews.CollectNews.Domain.csproj", "{0362D988-2EAC-4734-9B88-9DBB372A6C2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{E35C89E8-7810-4A62-BBFA-87608795B6CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E35C89E8-7810-4A62-BBFA-87608795B6CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E35C89E8-7810-4A62-BBFA-87608795B6CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0362D988-2EAC-4734-9B88-9DBB372A6C2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0362D988-2EAC-4734-9B88-9DBB372A6C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0362D988-2EAC-4734-9B88-9DBB372A6C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0362D988-2EAC-4734-9B88-9DBB372A6C2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{48D1F879-62C2-455F-BCF4-95B54FA59378} = {FD133A33-9997-4D7B-B048-17AD57C4EDBE}
 		{1FCF9125-E431-4129-963C-CFFA2C6ED150} = {FD133A33-9997-4D7B-B048-17AD57C4EDBE}
 		{E35C89E8-7810-4A62-BBFA-87608795B6CD} = {FF01E764-5B3B-4240-B739-B21069E9B3A4}
+		{0362D988-2EAC-4734-9B88-9DBB372A6C2E} = {FD133A33-9997-4D7B-B048-17AD57C4EDBE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1549B295-E1D3-43F1-8D03-FF120365750A}

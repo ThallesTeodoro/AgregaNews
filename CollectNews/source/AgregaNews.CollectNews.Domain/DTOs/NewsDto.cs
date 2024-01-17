@@ -1,4 +1,4 @@
-﻿namespace AgregaNews.Common.DTOs;
+﻿namespace AgregaNews.CollectNews.Domain.DTOs;
 
 public record NewsDto(
     string status,

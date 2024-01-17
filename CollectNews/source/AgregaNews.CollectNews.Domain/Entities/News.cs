@@ -1,6 +1,6 @@
 ﻿using AgregaNews.Common.Contracts.Data;
 
-namespace AgregaNews.Common.Entities;
+namespace AgregaNews.CollectNews.Domain.Entities;
 
 public class News : IEntity
 {

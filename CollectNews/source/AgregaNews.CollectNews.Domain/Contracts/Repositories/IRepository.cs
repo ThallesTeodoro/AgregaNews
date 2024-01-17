@@ -1,6 +1,6 @@
 ﻿using AgregaNews.Common.Contracts.Data;
 
-namespace AgregaNews.Common.Contracts.Repositories;
+namespace AgregaNews.CollectNews.Domain.Contracts.Repositories;
 
 public interface IRepository<T> where T : IEntity
 {

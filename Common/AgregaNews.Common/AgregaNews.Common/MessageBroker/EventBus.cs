@@ -1,7 +1,7 @@
 ﻿using AgregaNews.Common.Contracts.EventBus;
 using MassTransit;
 
-namespace AgregaNews.CollectNews.Infrastructure.MessageBroker;
+namespace AgregaNews.Common.Infrastructure.MessageBroker;
 
 public class EventBus : IEventBus
 {
@@ -16,7 +16,7 @@ public class EventBus : IEventBus
         where T : class =>
         _publishEndpoint.Publish(message, cancellationToken);
 
-    public Task PublishAsync<T>(List<T> messages, CancellationToken cancellationToken = default) 
+    public Task PublishAsync<T>(List<T> messages, CancellationToken cancellationToken = default)
         where T : class
     {
         foreach (var message in messages)

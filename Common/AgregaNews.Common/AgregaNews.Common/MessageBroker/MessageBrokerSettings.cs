@@ -1,4 +1,4 @@
-﻿namespace AgregaNews.CollectNews.Infrastructure.MessageBroker;
+﻿namespace AgregaNews.Common.Infrastructure.MessageBroker;
 
 public sealed class MessageBrokerSettings
 {

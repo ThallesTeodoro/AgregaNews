@@ -1,0 +1,6 @@
+@AgregaNews.AnalyzeNews_HostAddress = http://localhost:5141
+
+GET {{AgregaNews.AnalyzeNews_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

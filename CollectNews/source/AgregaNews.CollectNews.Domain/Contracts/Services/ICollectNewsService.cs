@@ -1,6 +1,6 @@
-﻿using AgregaNews.Common.DTOs;
+﻿using AgregaNews.CollectNews.Domain.DTOs;
 
-namespace AgregaNews.Common.Contracts.Services;
+namespace AgregaNews.CollectNews.Domain.Contracts.Services;
 
 public interface ICollectNewsService
 {

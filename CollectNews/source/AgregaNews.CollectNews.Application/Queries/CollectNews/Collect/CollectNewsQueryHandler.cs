@@ -1,9 +1,9 @@
 ﻿using AgregaNews.CollectNews.Application.Responses;
+using AgregaNews.CollectNews.Domain.Contracts.Repositories;
+using AgregaNews.CollectNews.Domain.Contracts.Services;
+using AgregaNews.CollectNews.Domain.Entities;
 using AgregaNews.Common.Contracts.EventBus;
 using AgregaNews.Common.Contracts.QueueEvents;
-using AgregaNews.Common.Contracts.Repositories;
-using AgregaNews.Common.Contracts.Services;
-using AgregaNews.Common.Entities;
 using AutoMapper;
 using MediatR;
 

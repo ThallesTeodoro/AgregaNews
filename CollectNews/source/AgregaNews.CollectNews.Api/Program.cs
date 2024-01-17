@@ -2,7 +2,7 @@ using AgregaNews.CollectNews.Api.Middlewares;
 using AgregaNews.CollectNews.Api.Options;
 using AgregaNews.CollectNews.Application;
 using AgregaNews.CollectNews.Infrastructure;
-using AgregaNews.CollectNews.Infrastructure.MessageBroker;
+using AgregaNews.Common.Infrastructure.MessageBroker;
 using Carter;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;

@@ -1,14 +1,14 @@
 ﻿using AgregaNews.Common.Contracts.EventBus;
-using AgregaNews.Common.Contracts.Repositories;
-using AgregaNews.Common.Contracts.Services;
 using AgregaNews.CollectNews.Infrastructure.Data.Repositories;
-using AgregaNews.CollectNews.Infrastructure.MessageBroker;
 using AgregaNews.CollectNews.Infrastructure.Services;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
+using AgregaNews.Common.Infrastructure.MessageBroker;
+using AgregaNews.CollectNews.Domain.Contracts.Services;
+using AgregaNews.CollectNews.Domain.Contracts.Repositories;
 
 namespace AgregaNews.CollectNews.Infrastructure;
 
@@ -35,6 +35,8 @@ public static class DependencyInjection
                     h.Username(settings.Username);
                     h.Password(settings.Password);
                 });
+
+                configurator.ConfigureEndpoints(context);
             });
         });
 
