@@ -475,4 +475,5 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 CollectNews/source/AgregaNews.CollectNews.Api/appsettings.Development.json
+AnalyzeNews/source/AgregaNews.AnalyzeNews.Api/appsettings.Development.json
 .containers/*

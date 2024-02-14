@@ -5,7 +5,7 @@ services:
     image: ${DOCKER_REGISTRY-}agreganewscollectnewsapi
     build:
       context: .
-      dockerfile: source/AgregaNews.CollectNews.Api/Dockerfile
+      dockerfile: CollectNews/source/AgregaNews.CollectNews.Api/Dockerfile
     ports:
       - "8080:5000"
       - "8081:5001"
@@ -17,7 +17,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - collectnews_data:/data/db
+      - ./.containers/collectnews/data/db:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: dbusername
       MONGO_INITDB_ROOT_PASSWORD: secret
@@ -37,5 +37,14 @@ services:
         - 15672:15672
         - 5672:5672
 
-volumes:
-  collectnews_data:
+  agreganews.analyzenews.database:
+    image: mongo
+    container_name: AgregaNews.AnalyzeNews.Database
+    hostname: analyzenewsdb
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./.containers/analyzenews/data/db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dbusername
+      MONGO_INITDB_ROOT_PASSWORD: secret

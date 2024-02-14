@@ -1,5 +1,7 @@
 ﻿using AgregaNews.AnalyzeNews.Application.Consumers.NewsAnalyze;
+using AgregaNews.AnalyzeNews.Application.Mappers;
 using AgregaNews.Common.Infrastructure.MessageBroker;
+using AutoMapper;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,8 +26,23 @@ public static class DependencyInjection
                     h.Username(settings.Username);
                     h.Password(settings.Password);
                 });
+
+                configurator.ConfigureEndpoints(context);
             });
         });
+
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssemblies(ApplicationAssemblyReference.Assembly);
+        });
+
+        var autoMapperConfiguration = new MapperConfiguration(cfg =>
+        {
+            cfg.AddProfile<AnalyzeNewsProfile>();
+        });
+
+        var mapper = autoMapperConfiguration.CreateMapper();
+        services.AddSingleton(mapper);
 
         return services;
     }

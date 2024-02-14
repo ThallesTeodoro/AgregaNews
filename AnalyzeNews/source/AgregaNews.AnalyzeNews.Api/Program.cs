@@ -1,35 +1,35 @@
 using AgregaNews.Common.Infrastructure.MessageBroker;
 using Microsoft.Extensions.Options;
-using MassTransit;
-using AgregaNews.AnalyzeNews.Application.Consumers.NewsAnalyze;
+using AgregaNews.AnalyzeNews.Application;
+using AgregaNews.AnalyzeNews.Infrastructure;
+using AgregaNews.AnalyzeNews.Api.Options;
+using MongoDB.Driver;
+using Carter;
+using AgregaNews.AnalyzeNews.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.ConfigureOptions<DatabaseOptionsSetup>();
 
 builder.Services.Configure<MessageBrokerSettings>(builder.Configuration.GetSection("MessageBroker"));
 builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<MessageBrokerSettings>>().Value);
 
-builder.Services.AddMassTransit(bussConfigurator =>
+builder.Services.AddSingleton<IMongoDatabase>(serviceProvider =>
 {
-    bussConfigurator.SetKebabCaseEndpointNameFormatter();
+    var databaseOptions = serviceProvider.GetService<IOptions<DatabaseOptions>>()!.Value;
 
-    bussConfigurator.AddConsumer<NewsAnalyzeEventConsumer>();
+    var mongoClient = new MongoClient(databaseOptions.ConnectionString);
 
-    bussConfigurator.UsingRabbitMq((context, configurator) =>
-    {
-        MessageBrokerSettings settings = context.GetRequiredService<MessageBrokerSettings>();
-
-        configurator.Host(new Uri(settings.Host), h =>
-        {
-            h.Username(settings.Username);
-            h.Password(settings.Password);
-        });
-
-        configurator.ConfigureEndpoints(context);
-    });
+    return mongoClient.GetDatabase(databaseOptions.DatabaseName);
 });
+
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddCarter();
 
 var app = builder.Build();
 
@@ -40,6 +40,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionHandlerMiddleware>();
+
 app.UseHttpsRedirection();
+
+app.MapCarter();
 
 app.Run();

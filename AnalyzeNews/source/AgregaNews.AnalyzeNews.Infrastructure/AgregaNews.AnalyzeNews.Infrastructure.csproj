@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.23.1" />
+    <PackageReference Include="OpenAI" Version="1.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AgregaNews.AnalyzeNews.Domain\AgregaNews.AnalyzeNews.Domain.csproj" />
   </ItemGroup>
 
