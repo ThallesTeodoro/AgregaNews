@@ -9,9 +9,14 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["source/AgregaNews.CollectNews.Api/AgregaNews.CollectNews.Api.csproj", "source/AgregaNews.CollectNews.Api/"]
+COPY ["CollectNews/source/AgregaNews.CollectNews.Api/AgregaNews.CollectNews.Api.csproj", "source/AgregaNews.CollectNews.Api/"]
+COPY ["CollectNews/source/AgregaNews.CollectNews.Application/AgregaNews.CollectNews.Application.csproj", "source/AgregaNews.CollectNews.Application/"]
+COPY ["CollectNews/source/AgregaNews.CollectNews.Domain/AgregaNews.CollectNews.Domain.csproj", "source/AgregaNews.CollectNews.Domain/"]
+COPY ["CollectNews/source/AgregaNews.CollectNews.Infrastructure/AgregaNews.CollectNews.Infrastructure.csproj", "source/AgregaNews.CollectNews.Infrastructure/"]
+COPY ["Common/Packages", "source/common/packages"]
+COPY ["Common/NuGet.config", "."]
 RUN dotnet restore "./source/AgregaNews.CollectNews.Api/./AgregaNews.CollectNews.Api.csproj"
-COPY . .
+COPY CollectNews .
 WORKDIR "/src/source/AgregaNews.CollectNews.Api"
 RUN dotnet build "./AgregaNews.CollectNews.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 

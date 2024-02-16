@@ -1,11 +1,11 @@
-using AgregaNews.Common.Infrastructure.MessageBroker;
-using Microsoft.Extensions.Options;
+using AgregaNews.AnalyzeNews.Api.Middlewares;
+using AgregaNews.AnalyzeNews.Api.Options;
 using AgregaNews.AnalyzeNews.Application;
 using AgregaNews.AnalyzeNews.Infrastructure;
-using AgregaNews.AnalyzeNews.Api.Options;
-using MongoDB.Driver;
+using AgregaNews.Common.Infrastructure.MessageBroker;
 using Carter;
-using AgregaNews.AnalyzeNews.Api.Middlewares;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 

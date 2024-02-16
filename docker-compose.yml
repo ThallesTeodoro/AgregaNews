@@ -1,15 +1,6 @@
 version: '3.4'
 
 services:
-  agreganews.collectnews.api:
-    image: ${DOCKER_REGISTRY-}agreganewscollectnewsapi
-    build:
-      context: .
-      dockerfile: CollectNews/source/AgregaNews.CollectNews.Api/Dockerfile
-    ports:
-      - "8080:5000"
-      - "8081:5001"
-
   agreganews.collectnews.database:
     image: mongo
     container_name: AgregaNews.CollectNews.Database
@@ -48,3 +39,35 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: dbusername
       MONGO_INITDB_ROOT_PASSWORD: secret
+
+  agreganews.collectnews.api:
+    depends_on:
+      - agreganews.collectnews.database
+      - agreganews.rabbitmq
+    image: ${DOCKER_REGISTRY-}agreganewscollectnewsapi
+    container_name: AgregaNews.CollectNews.Api
+    build:
+      context: .
+      dockerfile: CollectNews/source/AgregaNews.CollectNews.Api/Dockerfile
+    ports:
+      - "5000:8080"
+      - "5001:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+
+  agreganews.analyzenews.api:
+    depends_on:
+      - agreganews.analyzenews.database
+      - agreganews.rabbitmq
+    image: ${DOCKER_REGISTRY-}agreganewsanalyzenewsapi
+    container_name: AgregaNews.AnalyzeNews.Api
+    build:
+      context: .
+      dockerfile: AnalyzeNews/source/AgregaNews.AnalyzeNews.Api/Dockerfile
+    ports:
+      - "5003:8080"
+      - "5004:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080

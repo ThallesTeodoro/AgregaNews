@@ -22,13 +22,11 @@ public class AnalyzeNewsModule : CarterModule
         {
             var response = new JsonResponse<List<AnalyzedNewsResponse>, List<object>>(StatusCodes.Status200OK, null, null);
 
-            var analyzedNews = await sender.Send(new AnalyzedNewsQuery(parameters.size));
-
-            response.Data = analyzedNews;
+            response.Data = await sender.Send(new AnalyzedNewsQuery(parameters.size));
 
             httpContext.Response.StatusCode = response.StatusCode;
 
-            return response;
+            return response.ToString();
         })
         .WithName("AnalyzedNews")
         .Produces<JsonResponse<List<AnalyzedNewsResponse>, List<object>>>(StatusCodes.Status200OK)
