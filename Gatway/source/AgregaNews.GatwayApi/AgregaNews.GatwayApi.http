@@ -1,0 +1,6 @@
+@AgregaNews.GatwayApi_HostAddress = http://localhost:5177
+
+GET {{AgregaNews.GatwayApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -12,21 +12,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: dbusername
       MONGO_INITDB_ROOT_PASSWORD: secret
-
-  agreganews.rabbitmq:
-    image: rabbitmq:3.11.7-management
-    container_name: AgregaNews.Queue
-    hostname: agreganews-queue
-    volumes:
-      - ./.containers/queue/data/:/var/lib/rabbitmq
-      - ./.containers/queue/log/:/var/log/rabbitmq
-    environment:
-      RABBITMQ_DEFAULT_USER: mq_user
-      RABBITMQ_DEFAULT_PASS: secret
-    ports:
-        - 25672:25672
-        - 15672:15672
-        - 5672:5672
+    networks:
+      - agreganewsnetwork
 
   agreganews.analyzenews.database:
     image: mongo
@@ -39,6 +26,25 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: dbusername
       MONGO_INITDB_ROOT_PASSWORD: secret
+    networks:
+      - agreganewsnetwork
+
+  agreganews.rabbitmq:
+    image: rabbitmq:3.11.7-management
+    container_name: AgregaNews.Queue
+    hostname: agreganews-queue
+    volumes:
+      - ./.containers/queue/data/:/var/lib/rabbitmq
+      - ./.containers/queue/log/:/var/log/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: mq_user
+      RABBITMQ_DEFAULT_PASS: secret
+    ports:
+      - 25672:25672
+      - 15672:15672
+      - 5672:5672
+    networks:
+      - agreganewsnetwork
 
   agreganews.collectnews.api:
     depends_on:
@@ -50,11 +56,13 @@ services:
       context: .
       dockerfile: CollectNews/source/AgregaNews.CollectNews.Api/Dockerfile
     ports:
-      - "5000:8080"
-      - "5001:8081"
+      - "5100:8080"
+      - "5101:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
+    networks:
+      - agreganewsnetwork
 
   agreganews.analyzenews.api:
     depends_on:
@@ -66,8 +74,33 @@ services:
       context: .
       dockerfile: AnalyzeNews/source/AgregaNews.AnalyzeNews.Api/Dockerfile
     ports:
-      - "5003:8080"
-      - "5004:8081"
+      - "5200:8080"
+      - "5201:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
+    networks:
+      - agreganewsnetwork
+
+  agreganews.getway.api:
+    depends_on:
+      - agreganews.analyzenews.api
+      - agreganews.collectnews.api
+    image: ${DOCKER_REGISTRY-}agreganewsgatwayapi
+    container_name: AgregaNews.GatwayApi
+    build:
+      context: .
+      dockerfile: Gatway/source/AgregaNews.GatwayApi/Dockerfile
+    ports:
+      - "5000:8080"
+      - "5001:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+    networks:
+      - agreganewsnetwork
+
+networks:
+  agreganewsnetwork:
+    name: agreganewsnetwork
+    driver: bridge
