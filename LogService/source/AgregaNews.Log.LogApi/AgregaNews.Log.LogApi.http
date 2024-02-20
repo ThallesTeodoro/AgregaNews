@@ -1,0 +1,6 @@
+@AgregaNews.Log.LogApi_HostAddress = http://localhost:5023
+
+GET {{AgregaNews.Log.LogApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

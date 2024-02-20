@@ -1,11 +1,11 @@
-using AgregaNews.AnalyzeNews.Api.Middlewares;
-using AgregaNews.AnalyzeNews.Api.Options;
-using AgregaNews.AnalyzeNews.Application;
-using AgregaNews.AnalyzeNews.Infrastructure;
 using AgregaNews.Common.Infrastructure.MessageBroker;
-using Carter;
+using AgregaNews.Log.Infrastructure;
+using AgregaNews.Log.Application;
+using AgregaNews.Log.LogApi.Middlewares;
+using AgregaNews.Log.LogApi.Options;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using Carter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,10 +40,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseMiddleware<ResponseContentTypeMiddleware>();
-
-app.UseHttpsRedirection();
 
 app.MapCarter();
 

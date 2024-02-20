@@ -1,6 +1,7 @@
-﻿using AgregaNews.AnalyzeNews.Domain.Contracts.Repositories;
-using AgregaNews.AnalyzeNews.Domain.Contracts.Services;
-using AgregaNews.AnalyzeNews.Domain.Entities;
+﻿using AgregaNews.AnalyzeNews.Domain.Contracts.Services;
+using AgregaNews.Common.Contracts.EventBus;
+using AgregaNews.Common.Contracts.QueueEvents;
+using AgregaNews.Common.Enums;
 using Microsoft.Extensions.Configuration;
 using OpenAI_API;
 
@@ -9,12 +10,10 @@ namespace AgregaNews.AnalyzeNews.Infrastructure.Services;
 public class ChatGPTService : IChatGPTService
 {
     private readonly string _apiKey;
-    private readonly ILogRepository _logRepository;
+    private readonly IEventBus _eventBus;
 
-    public ChatGPTService(ILogRepository logRepository, IConfiguration configuration)
+    public ChatGPTService(IConfiguration configuration, IEventBus eventBus)
     {
-        _logRepository = logRepository;
-
         var apiKey = configuration.GetSection("OpenAI:ApiKey").Value;
         if (apiKey is null)
         {
@@ -22,6 +21,7 @@ public class ChatGPTService : IChatGPTService
         }
 
         _apiKey = apiKey;
+        _eventBus = eventBus;
     }
 
     public async Task<string> UseChatGPT(string query)
@@ -36,19 +36,18 @@ public class ChatGPTService : IChatGPTService
         }
         catch (Exception ex)
         {
-            await _logRepository.AddAsync(new Log()
+            await _eventBus.PublishAsync(new LogEvent()
             {
-                Id = Guid.NewGuid(),
-                Environment = "Dev",
+                Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development",
                 Message = ex.Message,
                 OccurredIn = DateTimeOffset.Now,
-                Service = "AgregaNews.AnalyzeNews",
-                Severity = "Error",
+                Service = InfrastructureAssemblyReference.AssemblyName,
+                Severity = LogSeverityEnum.Error,
                 ExceptionType = nameof(ex),
                 StackTrace = ex.StackTrace,
             });
 
-            throw;
+            return "Geral";
         }
     }
 }

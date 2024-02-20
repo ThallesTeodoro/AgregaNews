@@ -1,10 +1,6 @@
-﻿using AgregaNews.AnalyzeNews.Api.Contracts;
-using AgregaNews.AnalyzeNews.Infrastructure;
-using AgregaNews.Common.Contracts.EventBus;
-using AgregaNews.Common.Contracts.QueueEvents;
-using AgregaNews.Common.Enums;
+﻿using AgregaNews.Log.LogApi.Contracts;
 
-namespace AgregaNews.AnalyzeNews.Api.Middlewares;
+namespace AgregaNews.Log.LogApi.Middlewares;
 
 internal sealed class ExceptionHandlerMiddleware
 {
@@ -15,7 +11,7 @@ internal sealed class ExceptionHandlerMiddleware
         _next = next;
     }
 
-    public async Task Invoke(HttpContext httpContext, IEventBus eventBus)
+    public async Task Invoke(HttpContext httpContext)
     {
         try
         {
@@ -23,27 +19,16 @@ internal sealed class ExceptionHandlerMiddleware
         }
         catch (Exception ex)
         {
-            await HandlerExceptionAsync(httpContext, eventBus, ex);
+            await HandlerExceptionAsync(httpContext, ex);
         }
     }
 
-    private async Task HandlerExceptionAsync(HttpContext httpContext, IEventBus eventBus, Exception ex)
+    private async Task HandlerExceptionAsync(HttpContext httpContext, Exception ex)
     {
         (int statusCode, JsonResponse<object, object> response) statusCodeAndResponse = GetStatusCodeAndResponse(ex);
 
         httpContext.Response.ContentType = "application/json";
         httpContext.Response.StatusCode = statusCodeAndResponse.statusCode;
-
-        await eventBus.PublishAsync(new LogEvent()
-        {
-            Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development",
-            Message = ex.Message,
-            OccurredIn = DateTimeOffset.Now,
-            Service = InfrastructureAssemblyReference.AssemblyName,
-            Severity = LogSeverityEnum.Error,
-            ExceptionType = ex.GetType().ToString(),
-            StackTrace = ex.StackTrace,
-        });
 
         await httpContext.Response.WriteAsync(statusCodeAndResponse.response.ToString());
     }
@@ -54,3 +39,4 @@ internal sealed class ExceptionHandlerMiddleware
             _ => (StatusCodes.Status500InternalServerError, new JsonResponse<object, object>(StatusCodes.Status500InternalServerError, null, null))
         };
 }
+

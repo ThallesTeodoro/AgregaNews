@@ -35,20 +35,17 @@ public sealed class NewsAnalyzeEventConsumer : IConsumer<NewsAnalyzeEvent>
     {
         var collectedMessage = context.Message;
 
-        if (collectedMessage is not null)
+        var prompt = $"Em qual das seguintes categorias o título de notícia \"{collectedMessage.Title}\" melhor se enquadra: " +
+            $"{string.Join(", ", categories)}. Responda em uma só palavra";
+
+        var category = await _chatGPTService.UseChatGPT(prompt);
+
+        if (!string.IsNullOrEmpty(category))
         {
-            var prompt = $"Em qual das seguintes categorias o título de notícia \"{collectedMessage.Title}\" melhor se enquadra: " +
-                $"{string.Join(", ", categories)}. Responda em uma só palavra";
-
-            var category = await _chatGPTService.UseChatGPT(prompt);
-
-            if (!string.IsNullOrEmpty(category))
-            {
-                var analyzedNews = _mapper.Map<AnalyzedNews>(collectedMessage);
-                analyzedNews.Category = GetCategory(category);
-                analyzedNews.CreatedAt = DateTimeOffset.Now;
-                await _analyzedNewsRepository.AddAsync(analyzedNews);
-            }
+            var analyzedNews = _mapper.Map<AnalyzedNews>(collectedMessage);
+            analyzedNews.Category = GetCategory(category);
+            analyzedNews.CreatedAt = DateTimeOffset.Now;
+            await _analyzedNewsRepository.AddAsync(analyzedNews);
         }
     }
 

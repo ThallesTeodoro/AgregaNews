@@ -1,6 +1,7 @@
 ﻿using AgregaNews.Common.Contracts.Data;
 
-namespace AgregaNews.AnalyzeNews.Domain.Entities;
+namespace AgregaNews.Log.Domain.Entities;
+
 public class Log : IEntity
 {
     public Guid Id { get; set; }

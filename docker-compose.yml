@@ -29,6 +29,20 @@ services:
     networks:
       - agreganewsnetwork
 
+  agreganews.log.database:
+    image: mongo
+    container_name: AgregaNews.Log.Database
+    hostname: logsdb
+    ports:
+      - "27019:27017"
+    volumes:
+      - ./.containers/logs/data/db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dbusername
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    networks:
+      - agreganewsnetwork
+
   agreganews.rabbitmq:
     image: rabbitmq:3.11.7-management
     container_name: AgregaNews.Queue
@@ -76,6 +90,24 @@ services:
     ports:
       - "5200:8080"
       - "5201:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+    networks:
+      - agreganewsnetwork
+
+  agreganews.log.api:
+    depends_on:
+      - agreganews.log.database
+      - agreganews.rabbitmq
+    image: ${DOCKER_REGISTRY-}agreganewslogapi
+    container_name: AgregaNews.Log.Api
+    build:
+      context: .
+      dockerfile: LogService/source/AgregaNews.Log.LogApi/Dockerfile
+    ports:
+      - "5300:8080"
+      - "5301:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
