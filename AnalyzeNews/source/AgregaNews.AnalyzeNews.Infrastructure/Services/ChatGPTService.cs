@@ -3,6 +3,7 @@ using AgregaNews.Common.Contracts.EventBus;
 using AgregaNews.Common.Contracts.QueueEvents;
 using AgregaNews.Common.Enums;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using OpenAI_API;
 
 namespace AgregaNews.AnalyzeNews.Infrastructure.Services;
@@ -11,8 +12,9 @@ public class ChatGPTService : IChatGPTService
 {
     private readonly string _apiKey;
     private readonly IEventBus _eventBus;
+    private readonly ILogger<ChatGPTService> _logger;
 
-    public ChatGPTService(IConfiguration configuration, IEventBus eventBus)
+    public ChatGPTService(IConfiguration configuration, IEventBus eventBus, ILogger<ChatGPTService> logger)
     {
         var apiKey = configuration.GetSection("OpenAI:ApiKey").Value;
         if (apiKey is null)
@@ -22,6 +24,7 @@ public class ChatGPTService : IChatGPTService
 
         _apiKey = apiKey;
         _eventBus = eventBus;
+        _logger = logger;
     }
 
     public async Task<string> UseChatGPT(string query)
@@ -46,6 +49,11 @@ public class ChatGPTService : IChatGPTService
                 ExceptionType = nameof(ex),
                 StackTrace = ex.StackTrace,
             });
+
+            _logger.LogError(
+                "Service failure {@Error}, {@DateTimeUtc}",
+                ex.Message,
+                DateTime.UtcNow);
 
             return "Geral";
         }

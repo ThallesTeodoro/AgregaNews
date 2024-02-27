@@ -6,6 +6,7 @@ using AgregaNews.Common.Infrastructure.MessageBroker;
 using Carter;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddCarter();
+
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
 

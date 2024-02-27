@@ -1,5 +1,4 @@
 ﻿using AgregaNews.AnalyzeNews.Api.Contracts;
-using AgregaNews.AnalyzeNews.Infrastructure;
 using AgregaNews.Common.Contracts.EventBus;
 using AgregaNews.Common.Contracts.QueueEvents;
 using AgregaNews.Common.Enums;
@@ -9,10 +8,12 @@ namespace AgregaNews.AnalyzeNews.Api.Middlewares;
 internal sealed class ExceptionHandlerMiddleware
 {
     private readonly RequestDelegate _next;
+    private readonly ILogger<ExceptionHandlerMiddleware> _logger;
 
-    public ExceptionHandlerMiddleware(RequestDelegate next)
+    public ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
     {
         _next = next;
+        _logger = logger;
     }
 
     public async Task Invoke(HttpContext httpContext, IEventBus eventBus)
@@ -27,9 +28,9 @@ internal sealed class ExceptionHandlerMiddleware
         }
     }
 
-    private async Task HandlerExceptionAsync(HttpContext httpContext, IEventBus eventBus, Exception ex)
+    private async Task HandlerExceptionAsync(HttpContext httpContext, IEventBus eventBus, Exception exception)
     {
-        (int statusCode, JsonResponse<object, object> response) statusCodeAndResponse = GetStatusCodeAndResponse(ex);
+        (int statusCode, JsonResponse<object, object> response) statusCodeAndResponse = GetStatusCodeAndResponse(exception);
 
         httpContext.Response.ContentType = "application/json";
         httpContext.Response.StatusCode = statusCodeAndResponse.statusCode;
@@ -37,19 +38,24 @@ internal sealed class ExceptionHandlerMiddleware
         await eventBus.PublishAsync(new LogEvent()
         {
             Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development",
-            Message = ex.Message,
+            Message = exception.Message,
             OccurredIn = DateTimeOffset.Now,
             Service = typeof(ExceptionHandlerMiddleware).Assembly.FullName ?? "",
             Severity = LogSeverityEnum.Error,
-            ExceptionType = ex.GetType().ToString(),
-            StackTrace = ex.StackTrace,
+            ExceptionType = exception.GetType().ToString(),
+            StackTrace = exception.StackTrace,
         });
+
+        _logger.LogError(
+            "Request failure {@Error}, {@DateTimeUtc}",
+            exception.Message,
+            DateTime.UtcNow);
 
         await httpContext.Response.WriteAsync(statusCodeAndResponse.response.ToString());
     }
 
-    private (int statusCode, JsonResponse<object, object> response) GetStatusCodeAndResponse(Exception ex)
-        => ex switch
+    private (int statusCode, JsonResponse<object, object> response) GetStatusCodeAndResponse(Exception exception)
+        => exception switch
         {
             _ => (StatusCodes.Status500InternalServerError, new JsonResponse<object, object>(StatusCodes.Status500InternalServerError, null, null))
         };

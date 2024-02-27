@@ -1,6 +1,5 @@
 ﻿using AgregaNews.AnalyzeNews.Application.Responses;
 using AgregaNews.AnalyzeNews.Domain.Contracts.Repositories;
-using AgregaNews.AnalyzeNews.Domain.Entities;
 using AutoMapper;
 using MediatR;
 
