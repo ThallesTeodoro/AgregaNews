@@ -2,17 +2,20 @@
 using AgregaNews.CollectNews.Domain.DTOs;
 using AgregaNews.CollectNews.Domain.Exceptions.CollectNews;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System;
 using System.Net;
 
 namespace AgregaNews.CollectNews.Infrastructure.Services;
 
 public class CollectNewsService : ICollectNewsService
 {
-    private readonly string ApiKey;
-    private readonly string BaseUrl;
+    private readonly string _apiKey;
+    private readonly string _baseUrl;
+    private readonly ILogger<CollectNewsService> _logger;
 
-    public CollectNewsService(IConfiguration configuration)
+    public CollectNewsService(IConfiguration configuration, ILogger<CollectNewsService> logger)
     {
         var apiKey = configuration.GetSection("NewsApiSettings:ApiKey").Value;
         var baseUrl = configuration.GetSection("NewsApiSettings:BaseUrl").Value;
@@ -27,8 +30,9 @@ public class CollectNewsService : ICollectNewsService
             throw new ArgumentNullException(nameof(baseUrl));
         }
 
-        ApiKey = apiKey;
-        BaseUrl = baseUrl;
+        _apiKey = apiKey;
+        _baseUrl = baseUrl;
+        _logger = logger;
     }
 
     public async Task<NewsDto?> CollectTopHeadlinesAsync(string country, string? category, int? pageSize, int? page)
@@ -37,7 +41,7 @@ public class CollectNewsService : ICollectNewsService
 		{
             HttpClient client = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate });
             client.DefaultRequestHeaders.Add("user-agent", "News-API-csharp/0.1");
-            client.DefaultRequestHeaders.Add("x-api-key", ApiKey);
+            client.DefaultRequestHeaders.Add("x-api-key", _apiKey);
 
             pageSize ??= 10;
             page ??= 1;
@@ -56,7 +60,7 @@ public class CollectNewsService : ICollectNewsService
 
             var querystring = string.Join("&", queryParams.ToArray());
 
-            var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"{BaseUrl}/top-headlines?{querystring}");
+            var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}/top-headlines?{querystring}");
             var httpResponse = await client.SendAsync(httpRequest);
 
             var json = await httpResponse.Content.ReadAsStringAsync();
@@ -70,10 +74,19 @@ public class CollectNewsService : ICollectNewsService
                     return news;
                 }
 
-                throw new NewsStatusCodeErrorException();
+                throw new NewsStatusCodeErrorException("News status code is not 'ok'.");
             }
 
             return null;
+        }
+        catch (NewsStatusCodeErrorException)
+        {
+            _logger.LogError(
+                "Service failure {@Error}, {@DateTimeUtc}",
+                typeof(NewsStatusCodeErrorException).Name,
+                DateTime.UtcNow);
+            
+            throw;
         }
 		catch (Exception)
 		{

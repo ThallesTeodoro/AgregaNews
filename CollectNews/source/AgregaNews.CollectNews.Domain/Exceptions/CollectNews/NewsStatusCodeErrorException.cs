@@ -2,4 +2,8 @@
 
 public class NewsStatusCodeErrorException : Exception
 {
+    public NewsStatusCodeErrorException(string message)
+        : base(message)
+    {
+    }
 }

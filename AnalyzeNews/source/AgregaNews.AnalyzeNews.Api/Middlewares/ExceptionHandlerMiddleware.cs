@@ -39,7 +39,7 @@ internal sealed class ExceptionHandlerMiddleware
             Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development",
             Message = ex.Message,
             OccurredIn = DateTimeOffset.Now,
-            Service = InfrastructureAssemblyReference.AssemblyName,
+            Service = typeof(ExceptionHandlerMiddleware).Assembly.FullName ?? "",
             Severity = LogSeverityEnum.Error,
             ExceptionType = ex.GetType().ToString(),
             StackTrace = ex.StackTrace,
