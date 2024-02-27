@@ -4,12 +4,12 @@ using AutoMapper;
 using MediatR;
 
 namespace AgregaNews.AnalyzeNews.Application.Queries.AnalyzeNews.Analyzed;
-public sealed class AnalyzedNewsHandler : IRequestHandler<AnalyzedNewsQuery, List<AnalyzedNewsResponse>>
+public sealed class AnalyzedNewsQueryHandler : IRequestHandler<AnalyzedNewsQuery, List<AnalyzedNewsResponse>>
 {
     private readonly IAnalyzedNewsRepository _analyzedNewsRepository;
     private readonly IMapper _mapper;
 
-    public AnalyzedNewsHandler(IAnalyzedNewsRepository analyzedNewsRepository, IMapper mapper)
+    public AnalyzedNewsQueryHandler(IAnalyzedNewsRepository analyzedNewsRepository, IMapper mapper)
     {
         _analyzedNewsRepository = analyzedNewsRepository;
         _mapper = mapper;

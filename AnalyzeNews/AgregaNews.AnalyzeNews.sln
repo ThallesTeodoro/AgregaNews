@@ -7,13 +7,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{79B869
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{13C50D21-7056-46A5-8EBD-DF40C9E80CB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgregaNews.AnalyzeNews.Api", "source\AgregaNews.AnalyzeNews.Api\AgregaNews.AnalyzeNews.Api.csproj", "{D87C66D6-C8A4-4330-ABC8-332944BB62BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgregaNews.AnalyzeNews.Api", "source\AgregaNews.AnalyzeNews.Api\AgregaNews.AnalyzeNews.Api.csproj", "{D87C66D6-C8A4-4330-ABC8-332944BB62BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgregaNews.AnalyzeNews.Application", "source\AgregaNews.AnalyzeNews.Application\AgregaNews.AnalyzeNews.Application.csproj", "{41914AE8-948D-45FC-855C-7B1B7DB560DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgregaNews.AnalyzeNews.Application", "source\AgregaNews.AnalyzeNews.Application\AgregaNews.AnalyzeNews.Application.csproj", "{41914AE8-948D-45FC-855C-7B1B7DB560DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgregaNews.AnalyzeNews.Infrastructure", "source\AgregaNews.AnalyzeNews.Infrastructure\AgregaNews.AnalyzeNews.Infrastructure.csproj", "{CE882FE7-F309-4A2B-B8C0-46286397700F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgregaNews.AnalyzeNews.Infrastructure", "source\AgregaNews.AnalyzeNews.Infrastructure\AgregaNews.AnalyzeNews.Infrastructure.csproj", "{CE882FE7-F309-4A2B-B8C0-46286397700F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgregaNews.AnalyzeNews.Domain", "source\AgregaNews.AnalyzeNews.Domain\AgregaNews.AnalyzeNews.Domain.csproj", "{2F1DCAC3-FB34-47A0-B4BF-630AAEC9CC10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgregaNews.AnalyzeNews.Domain", "source\AgregaNews.AnalyzeNews.Domain\AgregaNews.AnalyzeNews.Domain.csproj", "{2F1DCAC3-FB34-47A0-B4BF-630AAEC9CC10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgregaNews.AnalyzeNews.Application.UnitTests", "tests\AgregaNews.AnalyzeNews.Application.UnitTests\AgregaNews.AnalyzeNews.Application.UnitTests.csproj", "{527DEF96-0F1C-418C-A024-6639B2D15764}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{2F1DCAC3-FB34-47A0-B4BF-630AAEC9CC10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F1DCAC3-FB34-47A0-B4BF-630AAEC9CC10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F1DCAC3-FB34-47A0-B4BF-630AAEC9CC10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{527DEF96-0F1C-418C-A024-6639B2D15764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{527DEF96-0F1C-418C-A024-6639B2D15764}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{527DEF96-0F1C-418C-A024-6639B2D15764}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{527DEF96-0F1C-418C-A024-6639B2D15764}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{41914AE8-948D-45FC-855C-7B1B7DB560DB} = {79B86983-B5F2-497A-958C-1BEDCDE24F0D}
 		{CE882FE7-F309-4A2B-B8C0-46286397700F} = {79B86983-B5F2-497A-958C-1BEDCDE24F0D}
 		{2F1DCAC3-FB34-47A0-B4BF-630AAEC9CC10} = {79B86983-B5F2-497A-958C-1BEDCDE24F0D}
+		{527DEF96-0F1C-418C-A024-6639B2D15764} = {13C50D21-7056-46A5-8EBD-DF40C9E80CB7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A6F1D7F-4D73-46A1-A7A3-D05DEDBB62EE}
