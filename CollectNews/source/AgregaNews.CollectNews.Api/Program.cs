@@ -1,3 +1,4 @@
+using AgregaNews.CollectNews.Api.HealthChecks;
 using AgregaNews.CollectNews.Api.Middlewares;
 using AgregaNews.CollectNews.Api.Options;
 using AgregaNews.CollectNews.Application;
@@ -28,9 +29,58 @@ builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "AgregaNews - Collect News API",
+        Version = "v1",
+        Description = "API para coleta de notícias de diversas fontes",
+        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+        {
+            Name = "AgregaNews Team"
+        }
+    });
+    
+    // Habilitar Swagger em produção com autenticação opcional
+    options.AddSecurityDefinition("ApiKey", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Description = "API Key Authentication",
+        Name = "X-API-Key",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        Scheme = "ApiKeyScheme"
+    });
+});
+
+// Health Checks
+builder.Services.AddHealthChecks()
+    .AddCheck<MongoDbHealthCheck>("mongodb", tags: new[] { "ready", "mongodb" });
 
 builder.Services.AddCarter();
+
+// CORS configuration
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        if (builder.Environment.IsDevelopment())
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        }
+        else
+        {
+            var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() 
+                ?? new[] { "*" };
+            policy.WithOrigins(allowedOrigins)
+                  .AllowAnyMethod()
+                  .AllowAnyHeader()
+                  .AllowCredentials();
+        }
+    });
+});
 
 builder.Host.UseSerilog((context, configuration) => 
     configuration.ReadFrom.Configuration(context.Configuration));
@@ -38,17 +88,35 @@ builder.Host.UseSerilog((context, configuration) =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "AgregaNews Collect News API v1");
+    c.RoutePrefix = string.Empty; // Swagger UI na raiz
+    if (!app.Environment.IsDevelopment())
+    {
+        c.EnablePersistAuthorization();
+    }
+});
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseMiddleware<ResponseContentTypeMiddleware>();
 
+app.UseCors();
+
 app.UseHttpsRedirection();
 
 app.MapCarter();
+
+// Health Check endpoints
+app.MapHealthChecks("/health");
+app.MapHealthChecks("/health/ready", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    Predicate = check => check.Tags.Contains("ready")
+});
+app.MapHealthChecks("/health/live", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    Predicate = _ => false
+});
 
 app.Run();
