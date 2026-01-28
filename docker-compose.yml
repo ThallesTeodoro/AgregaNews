@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 
 services:
   agreganews.collectnews.database:
@@ -114,15 +114,15 @@ services:
     networks:
       - agreganewsnetwork
 
-  agreganews.getway.api:
+  agreganews.gateway.api:
     depends_on:
       - agreganews.analyzenews.api
       - agreganews.collectnews.api
-    image: ${DOCKER_REGISTRY-}agreganewsgatwayapi
-    container_name: AgregaNews.GatwayApi
+    image: ${DOCKER_REGISTRY-}agreganewsgatewayapi
+    container_name: AgregaNews.GatewayApi
     build:
       context: .
-      dockerfile: Gatway/source/AgregaNews.GatwayApi/Dockerfile
+      dockerfile: Gateway/source/AgregaNews.GatewayApi/Dockerfile
     ports:
       - "5000:8080"
       - "5001:8081"
